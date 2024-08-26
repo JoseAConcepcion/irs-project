@@ -165,6 +165,7 @@ class Vista2(tk.Frame):
             opciones_seleccionadas.append("Incluir Análisis de Features")
         if self.checkbox_var3.get():
             opciones_seleccionadas.append("Incluir Análisis de estructura de texto")
+            self.reviews = qt.calculate_text_analysis()
         if self.checkbox_var4.get():
             opciones_seleccionadas.append("Incluir Longitud")
 

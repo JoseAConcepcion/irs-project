@@ -69,28 +69,28 @@ def calculate_text_score(text):
 
     return {"Syntax Complexity: ":syntax_complexity, "Lexical Diversity: ":Lexical_diversity}
 
-if __name__ == '__main__':
-    freeze_support()
-
-    texts = ["The sun rises in the east and sets in the west. It is a beautiful day today."
-
-    ,"Although the weather forecast predicted rain, the sun unexpectedly emerged from behind the clouds, casting a warm glow over the bustling city streets, much to the delight of the locals who had been eagerly awaiting the arrival of spring."
-
-    ,"The cat chased the mouse. The dog barked at the cat. The bird sang in the tree. The flower bloomed in the garden."
-
-    ,"The dog run fast. They're going to the park. Its a beautiful day outside."
-
-    ,"The cat meowed. The dog barked loudly. The bird sang a beautiful melody. The butterfly fluttered gracefully among the flowers in the garden."
-
-    ,"It was a sunny day, but it was raining at the same time. The cat chased the dog, but the dog was bigger than the cat."
-
-    ,"The incredibly huge, gigantic, massive, colossal mountain towered majestically over the tiny, minuscule, diminutive village nestled snugly at its base."
-
-    ,"The quick brown fox jumps over the lazy dog. It is a sunny day. Let's go to the park!"
-
-    ,"The quick brown fox jumps over the lazy dog! It is a sunny day? Let's go to the park."
-
-    ,"The cat chased the mouse. Although the weather forecast predicted rain, the sun unexpectedly emerged from behind the clouds, casting a warm glow over the bustling city streets, much to the delight of the locals who had been eagerly awaiting the arrival of spring. The dog barked loudly. Its a beautiful day outside."]
-
-    for text in texts:
-        print(calculate_text_score(text))
+# if __name__ == '__main__':
+#     freeze_support()
+#
+#     texts = ["The sun rises in the east and sets in the west. It is a beautiful day today."
+#
+#     ,"Although the weather forecast predicted rain, the sun unexpectedly emerged from behind the clouds, casting a warm glow over the bustling city streets, much to the delight of the locals who had been eagerly awaiting the arrival of spring."
+#
+#     ,"The cat chased the mouse. The dog barked at the cat. The bird sang in the tree. The flower bloomed in the garden."
+#
+#     ,"The dog run fast. They're going to the park. Its a beautiful day outside."
+#
+#     ,"The cat meowed. The dog barked loudly. The bird sang a beautiful melody. The butterfly fluttered gracefully among the flowers in the garden."
+#
+#     ,"It was a sunny day, but it was raining at the same time. The cat chased the dog, but the dog was bigger than the cat."
+#
+#     ,"The incredibly huge, gigantic, massive, colossal mountain towered majestically over the tiny, minuscule, diminutive village nestled snugly at its base."
+#
+#     ,"The quick brown fox jumps over the lazy dog. It is a sunny day. Let's go to the park!"
+#
+#     ,"The quick brown fox jumps over the lazy dog! It is a sunny day? Let's go to the park."
+#
+#     ,"The cat chased the mouse. Although the weather forecast predicted rain, the sun unexpectedly emerged from behind the clouds, casting a warm glow over the bustling city streets, much to the delight of the locals who had been eagerly awaiting the arrival of spring. The dog barked loudly. Its a beautiful day outside."]
+#
+#     for text in texts:
+#         print(calculate_text_score(text))

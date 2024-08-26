@@ -1,3 +1,4 @@
+from data_processing.analyze import calculate_text_score
 class Quantify:
     def __init__(self, items):
         """
@@ -42,14 +43,26 @@ class Quantify:
         """
         return len(item.features)
 
-    def calculate_text_analysis(self, item):
+    def calculate_text_analysis(self):
         """
         Lógica para calcular el ranking basado en análisis de texto.
-        
-        :param item: Objeto del cual se extrae el análisis de texto.
+
         :return: Resultado del análisis de texto del objeto.
         """
-        return item.text_analysis
+        for asin, entries in self.items.items():
+            texts = [entry['text'] for entry in entries[0:len(entries)-1]]
+            scores = [calculate_text_score(item) for item in texts]
+            max_syntax_complexity = 0
+            for result in scores:
+                if result['Syntax Complexity: ']>max_syntax_complexity:
+                    max_syntax_complexity = result['Syntax Complexity: ']
+            asign_scores = []
+            for score in scores:
+                asign_scores.append(((score['Syntax Complexity: ']/max_syntax_complexity)+score['Lexical Diversity: '])/2)
+            for i in range(len(entries)-1):
+                entries[i]['comment_ranking_value'] = asign_scores[i]
+        self.update_item_ranking_value()
+        return self.items
 
     def calculate_length(self, item):
         """
