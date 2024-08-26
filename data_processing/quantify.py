@@ -8,20 +8,29 @@ class Quantify:
         self.items = items
 
     def rank_helpful_votes(self):
+        # Inicializar una variable para almacenar el máximo
+        max_helpful_vote = 0
+
+        # Iterar sobre el diccionario de reseñas
+        for key, reviews in self.items.items():
+            for review in reviews:
+                # Comprobar si 'helpful_vote' está en el diccionario
+                if 'helpful_vote' in review:
+                    # Actualizar el máximo si es necesario
+                    max_helpful_vote = max(max_helpful_vote, review['helpful_vote'])
+
+        # Si no hay votos útiles, establecer max_helpful_vote en 1 para evitar división por cero
+        if max_helpful_vote == 0:
+            return self.items
+        # Calcular el ranking y actualizar ranking_value
         for asin, entries in self.items.items():
-            # Extraer todos los helpful_votes
-            helpful_votes = [entry['helpful_vote'] for entry in entries]
-            # for entry in entries:
-            #     print(entry)
-            # Verificar que hay votos útiles para evitar división por cero
-            if helpful_votes:
-                max_helpful_vote = max(helpful_votes)
-                if max_helpful_vote == 0:
-                    max_helpful_vote = 1
-                
-                # Calcular el ranking y actualizar ranking_value
-                for entry in entries:
-                    entry['ranking_value'] += entry['helpful_vote'] / max_helpful_vote
+            for entry in entries:
+                # Verificar que 'helpful_vote' está en el diccionario
+                if 'helpful_vote' in entry:
+                    entry['comment_ranking_value'] += entry['helpful_vote'] / max_helpful_vote
+
+        self.update_item_ranking_value()
+        return self.items
 
 
     def calculate_features(self, item):
@@ -50,3 +59,27 @@ class Quantify:
         :return: Longitud del objeto.
         """
         return item.length
+    
+    def update_item_ranking_value(self):
+        # Iterar sobre el diccionario de reseñas
+        for key, reviews in self.items.items():
+            total_comment_ranking = 0
+            count = 0
+            
+            # Sumar los valores de comment_ranking y contar las reseñas válidas
+            for review in reviews:
+                if 'comment_ranking_value' in review:
+                    total_comment_ranking += review['comment_ranking_value']
+                    count += 1
+            
+            # Calcular el item_ranking_value
+            if count > 0:
+                item_ranking_value = total_comment_ranking / count
+            else:
+                item_ranking_value = 0  # O cualquier valor por defecto que desees
+
+            # Actualizar el item_ranking_value en la última reseña o en un lugar específico
+            # Aquí asumimos que quieres actualizar el último elemento de la lista de reseñas
+            if reviews:
+                reviews[-1]['item_ranking_value'] = item_ranking_value
+

@@ -103,6 +103,7 @@ class Vista2(tk.Frame):
             }
         else:
             self.reviews = reviews
+            self.reviews_to_show = reviews
 
         self.volver_button = tk.Button(self, text="Volver", command=self.volver_a_vista1)
         self.volver_button.grid(column=0, row=5, pady=10)
@@ -134,17 +135,22 @@ class Vista2(tk.Frame):
                 # print(items)
                 self.comentario_text.insert(tk.END, items["text"] + "\n\n" +" votes " + str(items["helpful_vote"]) + " comment ranking " + str(items["comment_ranking_value"]) + '\n\n')
 
+
     def sort_reviews_by_ranking(self):
         # Obtener las claves del diccionario
         keys = list(self.reviews.keys())
         
-        # Ordenar las claves según el ranking_value
-        sorted_keys = sorted(keys, key=lambda k: self.reviews[k]['item_ranking_value'], reverse=True)
+        # Ordenar las claves según el item_ranking_value del último diccionario en la lista de reseñas
+        sorted_keys = sorted(keys, key=lambda k: self.reviews[k][-1].get('item_ranking_value', 0), reverse=True)
         
-        # Crear un nuevo diccionario con el orden basado en ranking_value
+        # Crear un nuevo diccionario con el orden basado en item_ranking_value
         sorted_reviews = {key: self.reviews[key] for key in sorted_keys}
         
+        # Actualizar self.reviews con las reseñas ordenadas
         self.reviews = sorted_reviews
+
+
+    
 
     def update_ranking(self):
         query = self.query_entry.get()
@@ -154,7 +160,7 @@ class Vista2(tk.Frame):
 
         if self.checkbox_var1.get():
             opciones_seleccionadas.append("Incluir Votos de Utilidad")
-            qt.rank_helpful_votes()
+            self.reviews = qt.rank_helpful_votes()
         if self.checkbox_var2.get():
             opciones_seleccionadas.append("Incluir Análisis de Features")
         if self.checkbox_var3.get():
