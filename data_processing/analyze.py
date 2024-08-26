@@ -1,19 +1,8 @@
-from multiprocessing import freeze_support
-
 import spacy
-import numpy as np
-
-# from spellchecker import SpellChecker
 
 # Cargar el modelo de SpaCy para ingles
 nlp = spacy.load("en_core_web_sm")
 
-
-from gensim.corpora import Dictionary
-from gensim.models import TfidfModel, LdaModel
-from sklearn.metrics.pairwise import cosine_similarity
-
-from textblob import TextBlob
 
 # Función para analizar la complejidad sintáctica
 def analyze_syntax_complexity(text):
