@@ -126,20 +126,20 @@ class Vista2(tk.Frame):
             index = seleccion[0]
             review_seleccionado = self.review_listbox.get(index)
             comentarios = self.reviews[review_seleccionado]
-            ranking = str(self.reviews[review_seleccionado]["ranking_value"])
+            ranking = str(self.reviews[review_seleccionado][-1]["item_ranking_value"])
             # Mostrar el comentario en la caja de texto
             self.comentario_text.delete(1.0, tk.END) 
-            self.comentario_text.insert(tk.END, "el ranking aqui " + ranking + " \n\n ")
-            for items in comentarios:
+            self.comentario_text.insert(tk.END, "el ranking general del item aqui aqui " + ranking + " \n\n ")
+            for items in comentarios[:-1]:
                 # print(items)
-                self.comentario_text.insert(tk.END, items["text"] + "\n\n" + str(items["helpful_vote"]) + '\n\n')
+                self.comentario_text.insert(tk.END, items["text"] + "\n\n" +" votes " + str(items["helpful_vote"]) + " comment ranking " + str(items["comment_ranking_value"]) + '\n\n')
 
     def sort_reviews_by_ranking(self):
         # Obtener las claves del diccionario
         keys = list(self.reviews.keys())
         
         # Ordenar las claves según el ranking_value
-        sorted_keys = sorted(keys, key=lambda k: self.reviews[k]['ranking_value'], reverse=True)
+        sorted_keys = sorted(keys, key=lambda k: self.reviews[k]['item_ranking_value'], reverse=True)
         
         # Crear un nuevo diccionario con el orden basado en ranking_value
         sorted_reviews = {key: self.reviews[key] for key in sorted_keys}

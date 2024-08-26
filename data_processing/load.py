@@ -28,6 +28,7 @@ class ReviewExtractor:
                         'text': text,
                         'helpful_vote': helpful_vote,
                         'rating': rating,
+                        'comment_ranking_value': 0
                     })
 
                 except json.JSONDecodeError:
@@ -35,7 +36,7 @@ class ReviewExtractor:
                     print(f"Error al procesar la línea: {line}")
 
         for key in self.asin_data.keys():
-            self.asin_data[key].append({'ranking_value': 0})
+            self.asin_data[key].append({'item_ranking_value': 0})
 
         return self.asin_data
 
