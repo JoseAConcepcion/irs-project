@@ -28,12 +28,14 @@ class ReviewExtractor:
                         'text': text,
                         'helpful_vote': helpful_vote,
                         'rating': rating,
-                        'ranking_value': 0
                     })
 
                 except json.JSONDecodeError:
                     # Manejo básico de errores si la línea no es un JSON válido
                     print(f"Error al procesar la línea: {line}")
+
+        for key in self.asin_data.keys():
+            self.asin_data[key].append({'ranking_value': 0})
 
         return self.asin_data
 
