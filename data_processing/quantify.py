@@ -64,14 +64,18 @@ class Quantify:
         self.update_item_ranking_value()
         return self.items
 
-    def calculate_length(self, item):
+    def calculate_length(self):
         """
         Lógica para calcular el ranking basado en longitud.
-        
-        :param item: Objeto del cual se extrae la longitud.
+
         :return: Longitud del objeto.
         """
-        return item.length
+        for asin, entries in self.items.items():
+            for entry in entries[0:len(entries)-1]:
+                entry['comment_ranking_value'] += len(entry['text'])
+
+        self.update_item_ranking_value()
+        return self.items
     
     def update_item_ranking_value(self):
         # Iterar sobre el diccionario de reseñas

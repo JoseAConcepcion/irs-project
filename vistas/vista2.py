@@ -168,6 +168,7 @@ class Vista2(tk.Frame):
             self.reviews = qt.calculate_text_analysis()
         if self.checkbox_var4.get():
             opciones_seleccionadas.append("Incluir Longitud")
+            self.reviews = qt.calculate_length()
 
         # Limpiar el contenido anterior
         self.comentario_text.delete(1.0, tk.END)
