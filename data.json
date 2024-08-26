@@ -1,0 +1,233 @@
+{
+  "B004RQ2IRG": {
+    "review1": {
+      "cd": [
+        ["favorite", 1.0],
+        ["amazing", 1.0],
+        ["good", 0.8]
+      ],
+      "choices": ["good", 0.8],
+      "recommendation": ["highly recommend", 1.0]
+    },
+    "review2": {
+      "voice": ["love", 1.0],
+      "cd": [
+        ["good", 0.8],
+        ["enjoying", 0.8]
+      ],
+      "songs": ["too many", 0.2],
+      "duo": ["great", 1.0]
+    },
+    "review3": {
+      "condition": ["perfect", 1.0],
+      "sound": ["great", 1.0],
+      "delivery": [
+        ["longer", 0.2],
+        ["worth it", 0.8]
+      ]
+    },
+    "review4": {
+      "cd": [
+        ["different", 0.8],
+        ["love", 1.0]
+      ],
+      "regret": ["no", 1.0]
+    },
+    "review5": {
+      "songs": ["love", 1.0],
+      "voice": ["awesome", 1.0],
+      "album": ["love", 1.0]
+    },
+    "review6": { "songs": ["great", 1.0] },
+    "review7": {
+      "voice": [
+        ["great", 1.0],
+        ["unique", 0.8]
+      ],
+      "songs": ["great", 1.0]
+    },
+    "review8": { "cd": ["love", 1.0] },
+    "review9": {
+      "cd": ["excellent", 1.0],
+      "time": ["great", 1.0],
+      "shape": ["great", 1.0],
+      "recommendation": ["recommend", 1.0]
+    },
+    "review10": { "cd": ["great", 1.0], "voice": ["love", 1.0] },
+    "review11": {
+      "cd": [
+        ["tremendous", 1.0],
+        ["excellent", 1.0],
+        ["fabulous", 1.0]
+      ],
+      "voice": ["excellent", 1.0],
+      "band": ["superb", 1.0],
+      "music": ["excellent", 1.0],
+      "songs": [
+        ["love", 1.0],
+        ["great", 1.0]
+      ]
+    },
+    "review12": { "shipping": ["fast", 0.9], "package": ["well", 0.8] },
+    "review13": { "listening": ["pleasure", 1.0], "cd": ["good", 0.8] },
+    "review14": { "selection": ["awesome", 1.0] },
+    "review15": {
+      "take": ["few listens", 0.2],
+      "voice": ["can sing anything", 1.0],
+      "hope": ["really hope", 1.0]
+    },
+    "review16": {
+      "fan": ["been a fan", 1.0],
+      "versatile": ["so versatile", 1.0],
+      "show": ["awesome", 1.0]
+    },
+    "review17": { "singers": ["love", 1.0], "album": ["love", 1.0] },
+    "review18": { "collection": ["great", 1.0], "done": ["well done", 1.0] },
+    "review19": { "cd": ["wasn’t what I thought", 0.2], "songs": ["old", 0.2] },
+    "review20": {
+      "listening": ["pleasure", 1.0],
+      "style": ["love", 1.0],
+      "music": ["love", 1.0]
+    },
+    "review21": { "cd": ["great", 1.0] },
+    "review22": { "job": ["horrible", 0.1], "songs": ["horrible", 0.1] },
+    "review23": { "music": ["love", 1.0] },
+    "review24": { "choices": ["great", 1.0], "voice": ["better", 1.0] },
+    "review25": { "memories": ["brings back", 1.0], "sound": ["mellow", 0.8] },
+    "review26": { "cd": ["great", 1.0] },
+    "review27": {
+      "cd": [
+        ["worth the wait", 1.0],
+        ["great", 1.0]
+      ],
+      "note": ["hit the note", 1.0],
+      "stuff": ["great", 1.0]
+    },
+    "review28": {
+      "fan": ["always been a fan", 1.0],
+      "selection": ["love", 1.0],
+      "songs": ["favorites", 1.0]
+    },
+    "review29": { "cd": ["love", 1.0] },
+    "review30": {
+      "cd": [
+        ["outdid himself", 1.0],
+        ["need", 1.0]
+      ],
+      "fan": ["fan", 1.0]
+    },
+    "review31": { "cd": ["love", 1.0], "fan": ["fan", 1.0] },
+    "review32": {
+      "album": ["great", 1.0],
+      "voice": ["can sing anything", 1.0]
+    },
+    "review33": { "album": ["love", 1.0], "covers": ["love", 1.0] },
+    "review34": {
+      "cd": [
+        ["love", 1.0],
+        ["great", 1.0]
+      ],
+      "songs": ["classic", 1.0]
+    },
+    "review35": { "album": ["love", 1.0], "songs": ["great", 1.0] },
+    "review36": { "songs": ["love", 1.0], "cd": ["perfect", 1.0] },
+    "review37": { "cd": ["great", 1.0] },
+    "review38": { "music": ["great", 1.0] },
+    "review39": {
+      "album": ["best", 1.0],
+      "job": ["exceptional", 1.0],
+      "hits": ["bring back", 1.0]
+    },
+    "review40": { "rendition": ["love", 1.0], "songs": ["old", 0.2] },
+    "review41": { "singer": ["awesome", 1.0], "set": ["best", 1.0] },
+    "review42": {
+      "songs": ["favorite", 1.0],
+      "skeptical": ["very skeptical", 0.2],
+      "musicians": ["excellent", 1.0],
+      "years": ["cherished", 1.0],
+      "compilation": ["highly recommend", 1.0]
+    },
+    "review43": { "cd": ["best", 1.0], "songs": ["great", 1.0] },
+    "review44": { "cd": ["great", 1.0] },
+    "review45": { "music": ["excellent", 1.0] },
+    "review46": { "duo": ["can't beat", 0.2], "artist": ["interesting", 0.8] },
+    "review47": { "cd": ["loved", 1.0], "singer": ["favorite", 1.0] },
+    "review48": {
+      "cd": ["loved", 1.0],
+      "singers": ["greatest", 1.0],
+      "song": ["waiting", 1.0],
+      "amazon": ["best", 1.0]
+    },
+    "review49": {
+      "artist": ["true", 1.0],
+      "voice": ["soars", 1.0],
+      "album": ["love", 1.0]
+    },
+    "review50": { "voice": ["amazing", 1.0], "songs": ["timeless", 1.0] },
+    "review51": { "songs": ["fabulous", 1.0], "music": ["classic", 1.0] },
+    "review52": { "cd": ["love", 1.0] },
+    "review53": { "songs": ["amazing", 1.0] },
+    "review54": { "songs": ["great", 1.0] },
+    "review55": { "material": ["perfectly re", 1.0] },
+    "review56": { "cd": ["cool", 1.0] },
+    "review57": { "album": ["fantastic", 1.0], "job": ["awesome", 1.0] },
+    "review58": { "country": ["too country", 0.2], "fan": ["huge", 0.2] },
+    "review59": {
+      "voice": ["can sing anything", 1.0],
+      "sound": ["great", 1.0]
+    },
+    "review60": { "cd": ["love", 1.0] },
+    "review61": { "cd": ["love", 1.0] },
+    "review62": {
+      "versions": ["own", 1.0],
+      "classics": ["bunch", 1.0],
+      "done": ["well done", 1.0],
+      "work": ["fan", 1.0],
+      "collection": ["need", 1.0]
+    },
+    "review63": {
+      "version": ["love", 1.0],
+      "voice": ["unique", 0.8],
+      "hits": ["country", 1.0]
+    },
+    "review64": { "songs": ["classic", 1.0] },
+    "review65": {
+      "cd": ["love", 1.0],
+      "job": ["great", 1.0],
+      "songs": ["every", 1.0]
+    },
+    "review66": { "compilation": ["absolutely stellar", 1.0] },
+    "review67": { "album": ["love", 1.0], "country": ["very country", 1.0] },
+    "review68": { "dunn": ["anything", 1.0] },
+    "review69": { "variety": ["great", 1.0] },
+    "review70": { "dong": ["wasn’t any", 0.2], "cd": ["great", 1.0] },
+    "review71": {
+      "cd": ["love", 1.0],
+      "oldies": ["great", 1.0],
+      "version": ["liked", 0.9]
+    },
+    "review72": { "voice": ["great", 1.0] },
+    "review73": {
+      "idea": ["great", 1.0],
+      "album": ["give", 1.0],
+      "songs": ["country", 1.0],
+      "genres": ["variety", 1.0],
+      "stars": ["gold", 1.0],
+      "touch": ["special", 1.0],
+      "flavor": ["slight", 0.8],
+      "country": ["country", 1.0]
+    },
+    "review74": { "cd": ["totally awesome", 1.0] },
+    "review75": {
+      "cd": ["excellent", 1.0],
+      "songs": ["enjoyed", 0.8],
+      "recommend": ["highly", 1.0],
+      "shipping": ["great", 1.0],
+      "date": ["expected", 0.8]
+    },
+    "review76": { "service": ["great", 1.0], "cd": ["enjoyed", 0.8] },
+    "review77": { "cd": ["looks like a winner", 1.0] },
+    "review78": { "cd": ["great", 1.0] },
+    "review79": { "cd": ["great", 1.0] }
+  }
+}
