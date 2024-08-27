@@ -70,9 +70,14 @@ class Quantify:
 
         :return: Longitud del objeto.
         """
+        max_length = 0
+        for asin, entries in self.items.items():
+            lengths = [len(entry['text']) for entry in entries[0:len(entries)-1]]
+            max_length = max(lengths) if max(lengths) > max_length else max_length
+
         for asin, entries in self.items.items():
             for entry in entries[0:len(entries)-1]:
-                entry['comment_ranking_value'] += len(entry['text'])
+                entry['comment_ranking_value'] += len(entry['text'])/max_length
 
         self.update_item_ranking_value()
         return self.items
