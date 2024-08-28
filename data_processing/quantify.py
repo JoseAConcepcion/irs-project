@@ -7,6 +7,10 @@ class Quantify:
         :param items: Lista de objetos que contienen los atributos necesarios para el cálculo.
         """
         self.items = items
+        for asin, entries in self.items.items():
+            for entry in entries:
+                entry['comment_ranking_value'] = 0
+        self.update_item_ranking_value()
 
     def rank_helpful_votes(self):
         # Inicializar una variable para almacenar el máximo
@@ -60,7 +64,7 @@ class Quantify:
             for score in scores:
                 asign_scores.append(((score['Syntax Complexity: ']/max_syntax_complexity)+score['Lexical Diversity: '])/2)
             for i in range(len(entries)-1):
-                entries[i]['comment_ranking_value'] = asign_scores[i]
+                entries[i]['comment_ranking_value'] += asign_scores[i]
         self.update_item_ranking_value()
         return self.items
 
@@ -89,7 +93,7 @@ class Quantify:
             count = 0
             
             # Sumar los valores de comment_ranking y contar las reseñas válidas
-            for review in reviews:
+            for review in reviews[0:len(reviews)-1]:
                 if 'comment_ranking_value' in review:
                     total_comment_ranking += review['comment_ranking_value']
                     count += 1
