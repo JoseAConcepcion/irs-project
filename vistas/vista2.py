@@ -44,25 +44,25 @@ class Vista2(tk.Frame):
         self.checkbox_var4 = tk.BooleanVar()
 
         self.checkbox1 = tk.Checkbutton(self, text="Incluir Votos de Utilidad", variable=self.checkbox_var1)
-        self.checkbox1.grid(column=0, row=3, sticky='w', padx=10)
+        self.checkbox1.grid(column=0, row=4, sticky='w', padx=10)
 
         self.checkbox2 = tk.Checkbutton(self, text="Inlcuir Análisis de Features", variable=self.checkbox_var2)
-        self.checkbox2.grid(column=0, row=4, sticky='w', padx=10)
+        self.checkbox2.grid(column=0, row=5, sticky='w', padx=10)
 
         self.checkbox3 = tk.Checkbutton(self, text="Inlcuir Análisis de estructura de texto", variable=self.checkbox_var3)
-        self.checkbox3.grid(column=1, row=3, sticky='w', padx=10)
+        self.checkbox3.grid(column=1, row=4, sticky='w', padx=10)
 
         self.checkbox4 = tk.Checkbutton(self, text="Incluir Longitud", variable=self.checkbox_var4)
-        self.checkbox4.grid(column=1, row=4, sticky='w', padx=10)
+        self.checkbox4.grid(column=1, row=5, sticky='w', padx=10)
 
         self.volver_button = tk.Button(self, text="Volver", command=self.volver_a_vista1)
-        self.volver_button.grid(column=0, row=5, pady=10)
+        self.volver_button.grid(column=0, row=6, pady=10)
 
         self.update_button = tk.Button(self, text="Recalcular", command=self.update_ranking)
-        self.update_button.grid(column=1, row=5, pady=11)
+        self.update_button.grid(column=1, row=6, pady=11)
         
         self.feature_button = tk.Button(self, text="Analizar Features de este item", command=self.analyze_features)
-        self.feature_button.grid(column=0, row=6, sticky='w', padx=10)
+        self.feature_button.grid(column=0, row=7, sticky='w', padx=10)
 
         if reviews is None:
 
