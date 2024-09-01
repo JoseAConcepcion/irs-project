@@ -112,17 +112,11 @@ class Quantify:
 
     def calculate_features_for_item(self, item):
         ft = feature_extractor()
-
-        print("Self items[item]:", self.items[item])
         features = ft.get_response(str(self.items[item]))
-        print(features)
-        print("PRINT FEATURE ITEMS")
-
 
         for feat in features.items():
             item_id, reviews = feat
             data = self.parse_features(reviews)
-            print("Data:", data)
             i = 1
             for review in self.items[item]:
                 review_key = 'review' + str(i)
@@ -131,7 +125,6 @@ class Quantify:
                 else:
                     continue
                 i += 1
-                print("Review with features:", review)
 
 
 

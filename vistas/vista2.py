@@ -45,6 +45,14 @@ class Vista2(tk.Frame):
         self.checkbox4 = tk.Checkbutton(self, text="Incluir Longitud", variable=self.checkbox_var4)
         self.checkbox4.grid(column=1, row=4, sticky='w', padx=10)
 
+        self.volver_button = tk.Button(self, text="Volver", command=self.volver_a_vista1)
+        self.volver_button.grid(column=0, row=5, pady=10)
+
+        self.update_button = tk.Button(self, text="Recalcular", command=self.update_ranking)
+        self.update_button.grid(column=1, row=5, pady=11)
+        
+        self.feature_button = tk.Button(self, text="Analizar Features de este item", command=self.analyze_features)
+        self.feature_button.grid(column=0, row=6, sticky='w', padx=10)
 
         if reviews is None:
 
@@ -105,11 +113,6 @@ class Vista2(tk.Frame):
             self.reviews = reviews
             self.reviews_to_show = reviews
 
-        self.volver_button = tk.Button(self, text="Volver", command=self.volver_a_vista1)
-        self.volver_button.grid(column=0, row=5, pady=10)
-
-        self.update_button = tk.Button(self, text="Recalcular", command=self.update_ranking)
-        self.update_button.grid(column=1, row=5, pady=11)
 
         self.show_ranking()
 
@@ -131,10 +134,23 @@ class Vista2(tk.Frame):
             # Mostrar el comentario en la caja de texto
             self.comentario_text.delete(1.0, tk.END) 
             self.comentario_text.insert(tk.END, "el ranking general del item aqui aqui " + ranking + " \n\n ")
-            for items in comentarios[:-1]:
-                # print(items)
-                self.comentario_text.insert(tk.END, items["text"] + "\n\n" +" votes " + str(items["helpful_vote"]) + " comment ranking " + str(items["comment_ranking_value"]) + '\n\n')
+            
+            for item in comentarios[:-1]:
+                texto = item["text"]
+                votos_útiles = str(item["helpful_vote"])
+                ranking_comentario = str(item["comment_ranking_value"])
+                features = str(item["features"])
 
+                # Construir la cadena a insertar en el widget de texto
+                comentario_str = (
+                    f"{texto}\n\n"
+                    f"votes {votos_útiles}\n"
+                    f"comment ranking {ranking_comentario}\n"
+                    f"features {features}\n\n"
+                )
+
+            # Insertar el texto en el widget
+            self.comentario_text.insert(tk.END, comentario_str)
 
     def sort_reviews_by_ranking(self):
         # Obtener las claves del diccionario
@@ -149,6 +165,14 @@ class Vista2(tk.Frame):
         # Actualizar self.reviews con las reseñas ordenadas
         self.reviews = sorted_reviews
 
+    def analyze_features(self):
+        seleccion = self.review_listbox.curselection()
+        if seleccion:
+            index = seleccion[0]
+            review_seleccionado = self.review_listbox.get(index)
+            qt = Quantify(self.reviews)
+            qt.calculate_features_for_item(review_seleccionado)
+            self.mostrar_comentario(None)
 
     
 
