@@ -46,8 +46,8 @@ class Vista2(tk.Frame):
         self.checkbox1 = tk.Checkbutton(self, text="Incluir Votos de Utilidad", variable=self.checkbox_var1)
         self.checkbox1.grid(column=0, row=4, sticky='w', padx=10)
 
-        self.checkbox2 = tk.Checkbutton(self, text="Inlcuir Análisis de Features", variable=self.checkbox_var2)
-        self.checkbox2.grid(column=0, row=5, sticky='w', padx=10)
+        # self.checkbox2 = tk.Checkbutton(self, text="Inlcuir Análisis de Features", variable=self.checkbox_var2)
+        # self.checkbox2.grid(column=0, row=5, sticky='w', padx=10)
 
         self.checkbox3 = tk.Checkbutton(self, text="Inlcuir Análisis de estructura de texto", variable=self.checkbox_var3)
         self.checkbox3.grid(column=1, row=4, sticky='w', padx=10)
@@ -227,8 +227,8 @@ class Vista2(tk.Frame):
         if self.checkbox_var1.get():
             opciones_seleccionadas.append("Incluir Votos de Utilidad")
             self.reviews = qt.rank_helpful_votes()
-        if self.checkbox_var2.get():
-            opciones_seleccionadas.append("Incluir Análisis de Features")
+        # if self.checkbox_var2.get():
+        #     opciones_seleccionadas.append("Incluir Análisis de Features")
         if self.checkbox_var3.get():
             opciones_seleccionadas.append("Incluir Análisis de estructura de texto")
             self.reviews = qt.calculate_text_analysis()
