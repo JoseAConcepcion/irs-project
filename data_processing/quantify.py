@@ -88,7 +88,6 @@ class Quantify:
         return self.items
     
     def update_item_ranking_value(self):
-        # Iterar sobre el diccionario de reseñas
         for key, reviews in self.items.items():
             total_comment_ranking = 0
             count = 0
@@ -116,20 +115,22 @@ class Quantify:
 
         for feat in features.items():
             item_id, reviews = feat
-            data = self.parse_features(reviews)
+            data, positivity_value = self.parse_features(reviews)
             i = 1
             for review in self.items[item]:
                 review_key = 'review' + str(i)
                 if review_key in data:
                     review['features'] = data[review_key]
+                    review['features_positivity'] = positivity_value
                 else:
                     continue
                 i += 1
 
-
-
     def parse_features(self, reviews):
         parsed_data = {}
+        positivity = 0
+        total_count = 0
+
         for review, features in reviews.items():
             parsed_data[review] = {}
             for feature, words in features.items():
@@ -138,8 +139,16 @@ class Quantify:
                     for word_info in words:
                         word, score = word_info
                         parsed_data[review][feature].append([word, score])
+                        positivity += score 
+                        total_count += 1  
                 else:
                     word, score = words
                     parsed_data[review][feature].append([word, score])
+                    positivity += score  # Sumar la puntuación a positivity
+                    total_count += 1  # Incrementar el contador total
 
-        return parsed_data
+        # Calcular el promedio si hay puntuaciones
+        if total_count > 0:
+            positivity = positivity / total_count
+
+        return parsed_data, positivity

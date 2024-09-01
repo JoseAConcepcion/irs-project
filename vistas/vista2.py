@@ -144,13 +144,15 @@ class Vista2(tk.Frame):
                 votos_útiles = str(item["helpful_vote"])
                 ranking_comentario = str(item["comment_ranking_value"])
                 features = str(item["features"])
+                features_value = str(item['features_positivity'])
 
                 # Construir la cadena a insertar en el widget de texto
                 comentario_str = (
                     f"{texto}\n\n"
                     f"votes {votos_útiles}\n"
                     f"comment ranking {ranking_comentario}\n"
-                    f"features {features}\n\n"
+                    f"features {features}\n"
+                    f"features positivity {features_value}\n\n"
                 )
 
             # Insertar el texto en el widget
