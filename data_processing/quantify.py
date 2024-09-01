@@ -1,4 +1,5 @@
 from data_processing.analyze import calculate_text_score
+from data_processing.feature_extraction import feature_extractor
 class Quantify:
     def __init__(self, items):
         """
@@ -109,3 +110,43 @@ class Quantify:
             if reviews:
                 reviews[-1]['item_ranking_value'] = item_ranking_value
 
+    def calculate_features_for_item(self, item):
+        ft = feature_extractor()
+
+        print("Self items[item]:", self.items[item])
+        features = ft.get_response(str(self.items[item]))
+        print(features)
+        print("PRINT FEATURE ITEMS")
+
+
+        for feat in features.items():
+            item_id, reviews = feat
+            data = self.parse_features(reviews)
+            print("Data:", data)
+            i = 1
+            for review in self.items[item]:
+                review_key = 'review' + str(i)
+                if review_key in data:
+                    review['features'] = data[review_key]
+                else:
+                    continue
+                i += 1
+                print("Review with features:", review)
+
+
+
+    def parse_features(self, reviews):
+        parsed_data = {}
+        for review, features in reviews.items():
+            parsed_data[review] = {}
+            for feature, words in features.items():
+                parsed_data[review][feature] = []
+                if isinstance(words[0], list):
+                    for word_info in words:
+                        word, score = word_info
+                        parsed_data[review][feature].append([word, score])
+                else:
+                    word, score = words
+                    parsed_data[review][feature].append([word, score])
+
+        return parsed_data
