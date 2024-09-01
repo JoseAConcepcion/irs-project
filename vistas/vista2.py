@@ -23,6 +23,10 @@ class Vista2(tk.Frame):
         self.review_listbox.grid(column=0, row=2, padx=10, pady=10)
         self.review_listbox.bind('<<ListboxSelect>>', self.mostrar_comentario)
 
+        scrollbar = tk.Scrollbar(orient="vertical", command=self.review_listbox.yview)
+        scrollbar.pack(side="right", fill="y")
+        self.review_listbox.config(yscrollcommand=scrollbar.set)
+
         # Cajas de texto para mostrar comentarios
         self.comentario_text = tk.Text(self, height=20, width=80)
         self.comentario_text.grid(column=1, row=2, padx=10, pady=10)
