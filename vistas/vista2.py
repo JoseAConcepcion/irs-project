@@ -172,11 +172,27 @@ class Vista2(tk.Frame):
         # Ordenar las claves según el item_ranking_value del último diccionario en la lista de reseñas
         sorted_keys = sorted(keys, key=lambda k: self.reviews[k][-1].get('item_ranking_value', 0), reverse=True)
         
-        # Crear un nuevo diccionario con el orden basado en item_ranking_value
+        # Obtener el texto de búsqueda
+        query = self.query_entry.get().lower()
+        
+        if query:  # Si el campo de búsqueda no está vacío
+            matching_key = None
+            for key in sorted_keys:
+                if query in key.lower():
+                    matching_key = key
+                    break
+            
+            if matching_key:  # Si se encontró una coincidencia
+                sorted_keys.remove(matching_key)  # Remover la coincidencia de su posición original
+                sorted_keys.insert(0, matching_key)  # Insertar la coincidencia al principio de la lista
+        
+        # Crear un nuevo diccionario con el orden basado en item_ranking_value y la coincidencia
         sorted_reviews = {key: self.reviews[key] for key in sorted_keys}
         
         # Actualizar self.reviews con las reseñas ordenadas
         self.reviews = sorted_reviews
+
+
 
     def analyze_features(self):
         seleccion = self.review_listbox.curselection()
