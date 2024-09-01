@@ -2,17 +2,27 @@ import tkinter as tk
 import random
 import speedtest
 from data_processing.quantify import Quantify
-class Vista2(tk.Frame):
-    def __init__(self, parent, reviews):
+from data_structure.trie import Trie
 
+class Vista2(tk.Frame):
+    def __init__(self, parent, reviews, trie):
         super().__init__(parent)
+        self.trie = trie
+        
         # Título
         self.titulo = tk.Label(self, text="Ranking de Reviews", font=("Arial Bold", 30))
         self.titulo.grid(column=0, row=0, pady=20)
 
-        # Barra de búsqueda
-        self.query_entry = tk.Entry(self, width=50)
+        # Barra de búsqueda con autocompletado
+        self.entry_var = tk.StringVar()
+        self.entry_var.trace("w", self.update_suggestions)
+
+        self.query_entry = tk.Entry(self, textvariable=self.entry_var, width=50)
         self.query_entry.grid(column=0, row=1, padx=10, pady=10)
+
+        self.suggestion_listbox = tk.Listbox(self, height=5)
+        self.suggestion_listbox.grid(column=0, row=2, padx=10, pady=10)
+        self.suggestion_listbox.bind("<<ListboxSelect>>", self.autocomplete)
 
         # Botón de búsqueda
         self.buscar_button = tk.Button(self, text="Buscar", command=self.update_ranking)
@@ -20,16 +30,12 @@ class Vista2(tk.Frame):
 
         # Listbox para mostrar reviews
         self.review_listbox = tk.Listbox(self, height=10, width=40)
-        self.review_listbox.grid(column=0, row=2, padx=10, pady=10)
+        self.review_listbox.grid(column=0, row=3, padx=10, pady=10)
         self.review_listbox.bind('<<ListboxSelect>>', self.mostrar_comentario)
-
-        scrollbar = tk.Scrollbar(orient="vertical", command=self.review_listbox.yview)
-        scrollbar.pack(side="right", fill="y")
-        self.review_listbox.config(yscrollcommand=scrollbar.set)
 
         # Cajas de texto para mostrar comentarios
         self.comentario_text = tk.Text(self, height=20, width=80)
-        self.comentario_text.grid(column=1, row=2, padx=10, pady=10)
+        self.comentario_text.grid(column=1, row=3, padx=10, pady=10)
 
         # Checkboxes
         self.checkbox_var1 = tk.BooleanVar()
@@ -115,8 +121,9 @@ class Vista2(tk.Frame):
             }
         else:
             self.reviews = reviews
-            self.reviews_to_show = reviews
 
+        for key in self.reviews.keys():
+            self.trie.insert(str(key))
 
         self.show_ranking()
 
@@ -180,6 +187,19 @@ class Vista2(tk.Frame):
             qt.calculate_features_for_item(review_seleccionado)
             self.mostrar_comentario(None)
 
+    def update_suggestions(self, *args):
+        prefix = self.entry_var.get()
+        suggestions = self.trie.search(prefix)
+        self.suggestion_listbox.delete(0, tk.END)
+        for suggestion in suggestions:
+            self.suggestion_listbox.insert(tk.END, suggestion)
+
+    def autocomplete(self, event):
+        selected_index = self.suggestion_listbox.curselection()
+        if selected_index:
+            selected_text = self.suggestion_listbox.get(selected_index)
+            self.entry_var.set(selected_text)
+            self.suggestion_listbox.delete(0, tk.END)
     
 
     def update_ranking(self):
