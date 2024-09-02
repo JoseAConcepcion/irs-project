@@ -7,16 +7,22 @@ from data_structure.trie import Trie
 
 class Vista2(tk.Frame):
     def __init__(self, parent, reviews, trie):
+        """
+                Initializes the second view of the application.
+
+                :param parent: Parent widget (usually the root window).
+                :param reviews: Dictionary containing review data.
+                :param trie: Trie data structure for autocomplete functionality.
+                """
         super().__init__(parent)
         self.trie = trie
         
 
-        # Título
         self.titulo = tk.Label(self, text="Ranking de Reviews", font=("Arial Bold", 30))
         self.titulo.grid(column=0, row=0, pady=20)
 
 
-        # Barra de búsqueda con autocompletado
+
         self.entry_var = tk.StringVar()
         self.entry_var.trace("w", self.update_suggestions)
 
@@ -27,19 +33,19 @@ class Vista2(tk.Frame):
         self.suggestion_listbox.grid(column=0, row=2, padx=10, pady=10)
         self.suggestion_listbox.bind("<<ListboxSelect>>", self.autocomplete)
 
-        # Botón de búsqueda
+
         self.buscar_button = tk.Button(self, text="Buscar", command=self.update_ranking)
 
         self.buscar_button.grid(column=1, row=1, padx=10)
 
-        # Listbox para mostrar reviews
+
         self.review_listbox = tk.Listbox(self, height=10, width=40)
 
         self.review_listbox.grid(column=0, row=3, padx=10, pady=10)
 
         self.review_listbox.bind('<<ListboxSelect>>', self.mostrar_comentario)
 
-        # Cajas de texto para mostrar comentarios
+
         self.comentario_text = tk.Text(self, height=20, width=80)
 
         self.comentario_text.grid(column=1, row=3, padx=10, pady=10)
@@ -55,8 +61,7 @@ class Vista2(tk.Frame):
         self.checkbox1 = tk.Checkbutton(self, text="Incluir Votos de Utilidad", variable=self.checkbox_var1)
         self.checkbox1.grid(column=0, row=4, sticky='w', padx=10)
 
-        # self.checkbox2 = tk.Checkbutton(self, text="Inlcuir Análisis de Features", variable=self.checkbox_var2)
-        # self.checkbox2.grid(column=0, row=5, sticky='w', padx=10)
+
 
         self.checkbox3 = tk.Checkbutton(self, text="Inlcuir Análisis de estructura de texto", variable=self.checkbox_var3)
         self.checkbox3.grid(column=1, row=4, sticky='w', padx=10)
@@ -76,7 +81,7 @@ class Vista2(tk.Frame):
 
         if reviews is None:
 
-        # Datos de ejemplo
+        # Example Data
             self.reviews = {
                 "Review 1": "Excelente producto, superó mis expectativas.",
                 "Review 2": "No estoy satisfecho con la calidad, esperaba más.",
@@ -140,14 +145,18 @@ class Vista2(tk.Frame):
         self.show_ranking()
 
     def show_ranking(self):
-        # Limpiar el Listbox antes de cargar las reseñas
+        """
+        Shows the reviews names ordered by the current ranking
+        """
         self.review_listbox.delete(0, tk.END)
-        # Cargar reviews en el Listbox
+
         for review in self.reviews.keys():
             self.review_listbox.insert(tk.END, review)
 
     def mostrar_comentario(self, event):
-        # Obtener el índice del elemento seleccionado
+        """
+                Displays the selected review's details in the text box.
+                """
         seleccion = self.review_listbox.curselection()
         if seleccion:
             index = seleccion[0]
@@ -155,7 +164,7 @@ class Vista2(tk.Frame):
 
             comentarios = self.reviews[review_seleccionado]
             ranking = str(self.reviews[review_seleccionado][-1]["item_ranking_value"])
-            # Mostrar el comentario en la caja de texto
+
             self.comentario_text.delete(1.0, tk.END) 
             self.comentario_text.insert(tk.END, "el ranking general del item aqui aqui " + ranking + " \n\n ")
             
@@ -166,7 +175,7 @@ class Vista2(tk.Frame):
                 features = str(item["features"])
                 features_value = str(item['features_positivity'])
 
-                # Construir la cadena a insertar en el widget de texto
+
                 comentario_str = (
                     f"{texto}\n\n"
                     f"votes {votos_útiles}\n"
@@ -175,39 +184,44 @@ class Vista2(tk.Frame):
                     f"features positivity {features_value}\n\n"
                 )
 
-            # Insertar el texto en el widget
+
             self.comentario_text.insert(tk.END, comentario_str)
 
     def sort_reviews_by_ranking(self):
-        # Obtener las claves del diccionario
+        """
+                Sorts reviews based on their ranking and applies search filter.
+                """
         keys = list(self.reviews.keys())
         
-        # Ordenar las claves según el item_ranking_value del último diccionario en la lista de reseñas
+
         sorted_keys = sorted(keys, key=lambda k: self.reviews[k][-1].get('item_ranking_value', 0), reverse=True)
         
-        # Obtener el texto de búsqueda
+
         query = self.query_entry.get().lower()
         
-        if query:  # Si el campo de búsqueda no está vacío
+        if query:
             matching_key = None
             for key in sorted_keys:
                 if query in key.lower():
                     matching_key = key
                     break
             
-            if matching_key:  # Si se encontró una coincidencia
-                sorted_keys.remove(matching_key)  # Remover la coincidencia de su posición original
-                sorted_keys.insert(0, matching_key)  # Insertar la coincidencia al principio de la lista
+            if matching_key:
+                sorted_keys.remove(matching_key)
+                sorted_keys.insert(0, matching_key)
         
-        # Crear un nuevo diccionario con el orden basado en item_ranking_value y la coincidencia
+
         sorted_reviews = {key: self.reviews[key] for key in sorted_keys}
         
-        # Actualizar self.reviews con las reseñas ordenadas
+
         self.reviews = sorted_reviews
 
 
 
     def analyze_features(self):
+        """
+                Analyzes features for the currently selected review.
+                """
         seleccion = self.review_listbox.curselection()
         if seleccion:
             index = seleccion[0]
@@ -217,6 +231,9 @@ class Vista2(tk.Frame):
             self.mostrar_comentario(None)
 
     def update_suggestions(self, *args):
+        """
+                Updates the autocomplete suggestions based on the input in the search bar.
+                """
         prefix = self.entry_var.get()
         suggestions = self.trie.search(prefix)
         self.suggestion_listbox.delete(0, tk.END)
@@ -224,6 +241,9 @@ class Vista2(tk.Frame):
             self.suggestion_listbox.insert(tk.END, suggestion)
 
     def autocomplete(self, event):
+        """
+                Handles the selection of an autocomplete suggestion.
+                """
         selected_index = self.suggestion_listbox.curselection()
         if selected_index:
             selected_text = self.suggestion_listbox.get(selected_index)
@@ -232,6 +252,9 @@ class Vista2(tk.Frame):
     
 
     def update_ranking(self):
+        """
+                Updates the ranking of reviews based on the selected options and search query.
+                """
         query = self.query_entry.get()
         opciones_seleccionadas = []
         qt = Quantify(self.reviews)
@@ -240,8 +263,7 @@ class Vista2(tk.Frame):
         if self.checkbox_var1.get():
             opciones_seleccionadas.append("Incluir Votos de Utilidad")
             self.reviews = qt.rank_helpful_votes()
-        # if self.checkbox_var2.get():
-        #     opciones_seleccionadas.append("Incluir Análisis de Features")
+
         if self.checkbox_var3.get():
             opciones_seleccionadas.append("Incluir Análisis de estructura de texto")
             self.reviews = qt.calculate_text_analysis()
@@ -250,18 +272,21 @@ class Vista2(tk.Frame):
             self.reviews = qt.calculate_length()
 
 
-        # Limpiar el contenido anterior
+
         self.comentario_text.delete(1.0, tk.END)
 
-        # Mostrar resultados en función de la búsqueda y las opciones seleccionadas
+
         self.comentario_text.insert(tk.END, f"Consulta: {query}\nOpciones seleccionadas: {', '.join(opciones_seleccionadas)}")
         
-        # Mezclar las reseñas y mostrar el ranking
+
 
         self.sort_reviews_by_ranking()
 
         self.show_ranking()
 
     def volver_a_vista1(self):
-        self.pack_forget()  # Ocultar la vista actual
+        """
+                Returns to the first view.
+                """
+        self.pack_forget()
         self.master.vista1.pack(fill="both", expand=True)  # Mostrar la vista 1

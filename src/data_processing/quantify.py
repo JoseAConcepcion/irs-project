@@ -3,9 +3,9 @@ from data_processing.feature_extraction import feature_extractor
 class Quantify:
     def __init__(self, items):
         """
-        Inicializa la clase Quantify con una lista de objetos.
-        
-        :param items: Lista de objetos que contienen los atributos necesarios para el cálculo.
+        Initializes the Quantify class with a list of objects.
+
+        :param items: List of objects containing the necessary attributes for calculation.
         """
         self.items = items
         for asin, entries in self.items.items():
@@ -14,24 +14,23 @@ class Quantify:
         self.update_item_ranking_value()
 
     def rank_helpful_votes(self):
-        # Inicializar una variable para almacenar el máximo
         max_helpful_vote = 0
 
-        # Iterar sobre el diccionario de reseñas
+
         for key, reviews in self.items.items():
             for review in reviews:
-                # Comprobar si 'helpful_vote' está en el diccionario
+
                 if 'helpful_vote' in review:
-                    # Actualizar el máximo si es necesario
+
                     max_helpful_vote = max(max_helpful_vote, review['helpful_vote'])
 
-        # Si no hay votos útiles, establecer max_helpful_vote en 1 para evitar división por cero
+
         if max_helpful_vote == 0:
             return self.items
-        # Calcular el ranking y actualizar ranking_value
+
         for asin, entries in self.items.items():
             for entry in entries:
-                # Verificar que 'helpful_vote' está en el diccionario
+
                 if 'helpful_vote' in entry:
                     entry['comment_ranking_value'] += entry['helpful_vote'] / max_helpful_vote
 
@@ -41,18 +40,18 @@ class Quantify:
 
     def calculate_features(self, item):
         """
-        Lógica para calcular el ranking basado en características.
-        
-        :param item: Objeto del cual se extraen las características.
-        :return: Número de características del objeto.
+        Logic to calculate the ranking based on features.
+
+        :param item: Object from which features are extracted.
+        :return: Number of features of the object.
         """
         return len(item.features)
 
     def calculate_text_analysis(self):
         """
-        Lógica para calcular el ranking basado en análisis de texto.
+                Logic to calculate the ranking based on text analysis.
 
-        :return: Resultado del análisis de texto del objeto.
+                :return: Result of the text analysis of the object.
         """
         for asin, entries in self.items.items():
             texts = [entry['text'] for entry in entries[0:len(entries)-1]]
@@ -71,9 +70,9 @@ class Quantify:
 
     def calculate_length(self):
         """
-        Lógica para calcular el ranking basado en longitud.
+        Logic to calculate the ranking based on length.
 
-        :return: Longitud del objeto.
+        :return: Length of the object.
         """
         max_length = 0
         for asin, entries in self.items.items():
@@ -88,28 +87,37 @@ class Quantify:
         return self.items
     
     def update_item_ranking_value(self):
+        """
+                        Updates the item ranking value for all items.
+
+                        This method calculates the average comment ranking value for each item,
+                        excluding the last review, and assigns it to the last review of each item.
+        """
         for key, reviews in self.items.items():
             total_comment_ranking = 0
             count = 0
             
-            # Sumar los valores de comment_ranking y contar las reseñas válidas
+
             for review in reviews[0:len(reviews)-1]:
                 if 'comment_ranking_value' in review:
                     total_comment_ranking += review['comment_ranking_value']
                     count += 1
             
-            # Calcular el item_ranking_value
+
             if count > 0:
                 item_ranking_value = total_comment_ranking / count
             else:
-                item_ranking_value = 0  # O cualquier valor por defecto que desees
+                item_ranking_value = 0
 
-            # Actualizar el item_ranking_value en la última reseña o en un lugar específico
-            # Aquí asumimos que quieres actualizar el último elemento de la lista de reseñas
             if reviews:
                 reviews[-1]['item_ranking_value'] = item_ranking_value
 
     def calculate_features_for_item(self, item):
+        """
+                        Extracts features for a given item and stores them in the corresponding reviews.
+
+                        :param item: Object for which features are extracted.
+                """
         ft = feature_extractor()
         features = ft.get_response(str(self.items[item]))
 
@@ -127,6 +135,11 @@ class Quantify:
                 i += 1
 
     def parse_features(self, reviews):
+        """
+                        Parses the extracted features and calculates the overall positivity score.
+
+                        :return: Dictionary of parsed features and the overall positivity score.
+                """
         parsed_data = {}
         positivity = 0
         total_count = 0

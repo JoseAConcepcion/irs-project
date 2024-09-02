@@ -1,10 +1,28 @@
+"""
+Módulo para extraer características de productos basado en comentarios de usuarios.
+
+Este módulo utiliza el servicio de generación de lenguaje de Google Gemini
+para analizar comentarios y extraer características relevantes de productos.
+"""
 import os
 import google.generativeai as genai
 
 import json
 
 class feature_extractor():
+    """
+        Class for extracting product features from user comments.
 
+        Attributes:
+            genai (google.generativeai): Configuration of the Gemini API client.
+            generation_config (dict): Configuration for content generation.
+            model (genai.GenerativeModel): Used generation model.
+            chat_session (genai.ChatSession): Chat session for sending messages.
+
+        Methods:
+            __init__(self): Constructor of the class.
+            get_response(self, user_input): Sends a query to the model and returns the processed response.
+        """
     genai.configure(api_key=os.environ["GEMINI_API_KEY"])
 
     # Create the model
@@ -102,6 +120,15 @@ class feature_extractor():
     )
 
     def get_response(self, user_input):
+        """
+                Sends a query to the model and returns the processed response in JSON format.
+
+                Args:
+                    user_input (str): The user input for the model.
+
+                Returns:
+                    dict: Dictionary JSON with extracted features.
+                """
         response = self.chat_session.send_message(user_input)
         response_text = response.text
         cleaned_response = response_text.replace("```json\n", "").replace("\n```", "").strip()

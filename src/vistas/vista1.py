@@ -9,6 +9,11 @@ from data_structure.trie import Trie
 
 class Vista1(tk.Frame):
     def __init__(self, parent):
+        """
+                Initializes the main window of the application.
+
+                :param parent: Parent widget (usually the root window).
+                """
         super().__init__(parent)
         
         self.lbl = tk.Label(self, text="Bienvenido, por favor cargue sus datos.", font=("Arial Bold", 30))
@@ -26,6 +31,9 @@ class Vista1(tk.Frame):
         self.data = None
 
     def select_file(self):
+        """
+                Opens a file dialog to select a JSONL file and loads the review data.
+                """
         file_path = filedialog.askopenfilename(
             filetypes=[("JSON Lines files", "*.jsonl"), ("All files", "*.*")]
         )
@@ -48,14 +56,18 @@ class Vista1(tk.Frame):
             self.user_data = [line.strip() for line in self.user_data]
 
     def load_review_data(self):
-        # Aquí puedes agregar la lógica para cargar los datos de las reseñas si es necesario
+        """
+                Loads the review data (placeholder method, may need to be implemented).
+                """
         self.lbl.configure(text="Reviews data loaded!!")
 
     def change_vist(self):
-        # Cambiar a la Vista 2
-        self.pack_forget()  # Ocultar la vista actual
+        """
+                Switches to the second view after calculating the ranking.
+                """
+        self.pack_forget()
 
         self.trie = Trie()
-        vista2 = Vista2(self.master, self.data, self.trie)  # Crear una instancia de Vista2
+        vista2 = Vista2(self.master, self.data, self.trie)
 
-        vista2.pack(fill="both", expand=True)  # Mostrar la nueva vista
+        vista2.pack(fill="both", expand=True)
