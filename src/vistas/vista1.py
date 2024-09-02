@@ -37,7 +37,15 @@ class Vista1(tk.Frame):
             self.lbl.configure(text=f"Datos cargados!")
 
     def load_user_data(self):
-            self.lbl.configure(text="Por favor, seleccione un archivo primero.")
+        """
+        Loads the user interests.
+        """
+        file_path = filedialog.askopenfilename(title="Seleccionar archivo", filetypes=[("Text files", "*.txt")])
+        
+        if file_path:  
+            with open(file_path, 'r') as file:
+                self.user_data = file.readlines()  
+            self.user_data = [line.strip() for line in self.user_data]
 
     def load_review_data(self):
         # Aquí puedes agregar la lógica para cargar los datos de las reseñas si es necesario
