@@ -1,5 +1,6 @@
 import os
 import google.generativeai as genai
+
 import json
 
 class feature_extractor():
@@ -106,3 +107,4 @@ class feature_extractor():
         cleaned_response = response_text.replace("```json\n", "").replace("\n```", "").strip()
         data = json.loads(cleaned_response)
         return data
+

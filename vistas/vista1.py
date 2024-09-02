@@ -2,8 +2,10 @@ import tkinter as tk
 from tkinter import filedialog
 import os
 from data_processing import load as ld
+
 from vistas.vista2 import Vista2
 from data_structure.trie import Trie 
+
 
 class Vista1(tk.Frame):
     def __init__(self, parent):
@@ -44,6 +46,8 @@ class Vista1(tk.Frame):
     def change_vist(self):
         # Cambiar a la Vista 2
         self.pack_forget()  # Ocultar la vista actual
+
         self.trie = Trie()
         vista2 = Vista2(self.master, self.data, self.trie)  # Crear una instancia de Vista2
+
         vista2.pack(fill="both", expand=True)  # Mostrar la nueva vista

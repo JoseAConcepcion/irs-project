@@ -1,5 +1,6 @@
 import tkinter as tk
 import random
+
 import speedtest
 from data_processing.quantify import Quantify
 from data_structure.trie import Trie
@@ -9,9 +10,11 @@ class Vista2(tk.Frame):
         super().__init__(parent)
         self.trie = trie
         
+
         # Título
         self.titulo = tk.Label(self, text="Ranking de Reviews", font=("Arial Bold", 30))
         self.titulo.grid(column=0, row=0, pady=20)
+
 
         # Barra de búsqueda con autocompletado
         self.entry_var = tk.StringVar()
@@ -26,22 +29,28 @@ class Vista2(tk.Frame):
 
         # Botón de búsqueda
         self.buscar_button = tk.Button(self, text="Buscar", command=self.update_ranking)
+
         self.buscar_button.grid(column=1, row=1, padx=10)
 
         # Listbox para mostrar reviews
         self.review_listbox = tk.Listbox(self, height=10, width=40)
+
         self.review_listbox.grid(column=0, row=3, padx=10, pady=10)
+
         self.review_listbox.bind('<<ListboxSelect>>', self.mostrar_comentario)
 
         # Cajas de texto para mostrar comentarios
         self.comentario_text = tk.Text(self, height=20, width=80)
+
         self.comentario_text.grid(column=1, row=3, padx=10, pady=10)
+
 
         # Checkboxes
         self.checkbox_var1 = tk.BooleanVar()
         self.checkbox_var2 = tk.BooleanVar()
         self.checkbox_var3 = tk.BooleanVar()
         self.checkbox_var4 = tk.BooleanVar()
+
 
         self.checkbox1 = tk.Checkbutton(self, text="Incluir Votos de Utilidad", variable=self.checkbox_var1)
         self.checkbox1.grid(column=0, row=4, sticky='w', padx=10)
@@ -63,6 +72,7 @@ class Vista2(tk.Frame):
         
         self.feature_button = tk.Button(self, text="Analizar Features de este item", command=self.analyze_features)
         self.feature_button.grid(column=0, row=7, sticky='w', padx=10)
+
 
         if reviews is None:
 
@@ -122,8 +132,10 @@ class Vista2(tk.Frame):
         else:
             self.reviews = reviews
 
+
         for key in self.reviews.keys():
             self.trie.insert(str(key))
+
 
         self.show_ranking()
 
@@ -140,6 +152,7 @@ class Vista2(tk.Frame):
         if seleccion:
             index = seleccion[0]
             review_seleccionado = self.review_listbox.get(index)
+
             comentarios = self.reviews[review_seleccionado]
             ranking = str(self.reviews[review_seleccionado][-1]["item_ranking_value"])
             # Mostrar el comentario en la caja de texto
@@ -236,6 +249,7 @@ class Vista2(tk.Frame):
             opciones_seleccionadas.append("Incluir Longitud")
             self.reviews = qt.calculate_length()
 
+
         # Limpiar el contenido anterior
         self.comentario_text.delete(1.0, tk.END)
 
@@ -243,7 +257,9 @@ class Vista2(tk.Frame):
         self.comentario_text.insert(tk.END, f"Consulta: {query}\nOpciones seleccionadas: {', '.join(opciones_seleccionadas)}")
         
         # Mezclar las reseñas y mostrar el ranking
+
         self.sort_reviews_by_ranking()
+
         self.show_ranking()
 
     def volver_a_vista1(self):
