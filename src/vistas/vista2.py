@@ -1,7 +1,4 @@
 import tkinter as tk
-import random
-
-import speedtest
 from data_processing.quantify import Quantify
 from data_structure.trie import Trie
 
