@@ -41,7 +41,8 @@ class ReviewExtractor:
                         'rating': rating,
                         'comment_ranking_value': 0,
                         'features': '',
-                        'features_positivity': 0
+                        'features_positivity': 0,
+                        'user_interests': 0
                     })
 
                     for_feature_extraction[asin].append({

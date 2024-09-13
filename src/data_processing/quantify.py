@@ -112,7 +112,7 @@ class Quantify:
             if reviews:
                 reviews[-1]['item_ranking_value'] = item_ranking_value
 
-    def calculate_features_for_item(self, item):
+    def calculate_features_for_item(self, item, interests):
         """
                         Extracts features for a given item and stores them in the corresponding reviews.
 
@@ -129,7 +129,11 @@ class Quantify:
                 review_key = 'review' + str(i)
                 if review_key in data:
                     review['features'] = data[review_key]
+                    for single_interest in interests:
+                        if single_interest in review['features']:
+                            review['user_interests'] += 1
                     review['features_positivity'] = positivity_value
+
                 else:
                     continue
                 i += 1
@@ -143,22 +147,24 @@ class Quantify:
         parsed_data = {}
         positivity = 0
         total_count = 0
-
-        for review, features in reviews.items():
-            parsed_data[review] = {}
-            for feature, words in features.items():
-                parsed_data[review][feature] = []
-                if isinstance(words[0], list):
-                    for word_info in words:
-                        word, score = word_info
+        try: 
+            for review, features in reviews.items():
+                parsed_data[review] = {}
+                for feature, words in features.items():
+                    parsed_data[review][feature] = []
+                    if isinstance(words[0], list):
+                        for word_info in words:
+                            word, score = word_info
+                            parsed_data[review][feature].append([word, score])
+                            positivity += score 
+                            total_count += 1  
+                    else:
+                        word, score = words
                         parsed_data[review][feature].append([word, score])
-                        positivity += score 
-                        total_count += 1  
-                else:
-                    word, score = words
-                    parsed_data[review][feature].append([word, score])
-                    positivity += score  # Sumar la puntuación a positivity
-                    total_count += 1  # Incrementar el contador total
+                        positivity += score  # Sumar la puntuación a positivity
+                        total_count += 1  # Incrementar el contador total
+        except Exception as e:
+            print("Ocurrio un error parseando la respuesta: \n" + e)
 
         # Calcular el promedio si hay puntuaciones
         if total_count > 0:

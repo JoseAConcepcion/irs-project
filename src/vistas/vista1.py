@@ -68,6 +68,6 @@ class Vista1(tk.Frame):
         self.pack_forget()
 
         self.trie = Trie()
-        vista2 = Vista2(self.master, self.data, self.trie)
+        vista2 = Vista2(self.master, self.data, self.trie, self.user_data)
 
         vista2.pack(fill="both", expand=True)

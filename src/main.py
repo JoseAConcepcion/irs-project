@@ -34,7 +34,7 @@ class Aplicacion(tk.Tk):
         self.trie =  Trie()
         # Inicializar las vistas
         self.vista1 = Vista1(self)
-        self.vista2 = Vista2(self, reviews=None, trie=self.trie)
+        self.vista2 = Vista2(self, reviews=None, trie=self.trie, interests=[])
 
 
         # Mostrar la vista 1 al inicio

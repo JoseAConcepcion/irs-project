@@ -6,7 +6,7 @@ from data_processing.quantify import Quantify
 from data_structure.trie import Trie
 
 class Vista2(tk.Frame):
-    def __init__(self, parent, reviews, trie):
+    def __init__(self, parent, reviews, trie, interests):
         """
                 Initializes the second view of the application.
 
@@ -16,6 +16,7 @@ class Vista2(tk.Frame):
                 """
         super().__init__(parent)
         self.trie = trie
+        self.interests = interests
         
 
         self.titulo = tk.Label(self, text="Ranking de Reviews", font=("Arial Bold", 30))
@@ -166,26 +167,31 @@ class Vista2(tk.Frame):
             ranking = str(self.reviews[review_seleccionado][-1]["item_ranking_value"])
 
             self.comentario_text.delete(1.0, tk.END) 
-            self.comentario_text.insert(tk.END, "el ranking general del item aqui aqui " + ranking + " \n\n ")
+            self.comentario_text.insert(tk.END, "el ranking general del item es: " + ranking + " \n\n ")
             
-            for item in comentarios[:-1]:
+            comentarios_ordenados = sorted(
+                comentarios[:-1],
+                key=lambda x: (float(x['user_interests']), float(x['comment_ranking_value'])),
+                reverse=True
+            )
+
+            for item in comentarios_ordenados:
                 texto = item["text"]
                 votos_útiles = str(item["helpful_vote"])
                 ranking_comentario = str(item["comment_ranking_value"])
                 features = str(item["features"])
                 features_value = str(item['features_positivity'])
-
+                user_interests = str(item['user_interests'])
 
                 comentario_str = (
                     f"{texto}\n\n"
                     f"votes {votos_útiles}\n"
                     f"comment ranking {ranking_comentario}\n"
                     f"features {features}\n"
-                    f"features positivity {features_value}\n\n"
+                    f"features positivity {features_value}\n"
+                    f"user interests {user_interests}\n\n"
                 )
-
-
-            self.comentario_text.insert(tk.END, comentario_str)
+                self.comentario_text.insert(tk.END, comentario_str)
 
     def sort_reviews_by_ranking(self):
         """
@@ -227,7 +233,7 @@ class Vista2(tk.Frame):
             index = seleccion[0]
             review_seleccionado = self.review_listbox.get(index)
             qt = Quantify(self.reviews)
-            qt.calculate_features_for_item(review_seleccionado)
+            qt.calculate_features_for_item(review_seleccionado, self.interests)
             self.mostrar_comentario(None)
 
     def update_suggestions(self, *args):
